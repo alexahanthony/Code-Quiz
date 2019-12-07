@@ -8,16 +8,19 @@ var answerPrompt = document.querySelector(".answers");
 var secondsLeft = 0;
 var nextQuestion = 0;
 var currentAnswer = "";
+var inputBox;
+var timerInterval;
 
-function quizBtn () {
+//start quiz button
+function quizBtn() {
   var aButton = document.createElement("button");
   aButton.textContent = "Start Quiz!";
   aButton.className = "quiz-button"
   questionPrompt.appendChild(aButton);
-  aButton.addEventListener("click", function(){startQuiz()});
+  aButton.addEventListener("click", function () { startQuiz() });
 }
-
-function startQuiz () {
+//clears page and starts timer at 75sec
+function startQuiz() {
   // console.log("start quiz");
   myHeading.innerHTML = "";
   secondsLeft = 75;
@@ -25,37 +28,28 @@ function startQuiz () {
   //askQuestions();
   renderQuestion();
 }
-
-
+//timer, counts down from 75 and when at 0, ends game
 function setTime() {
-  var timerInterval = setInterval(function() {
+  timerInterval = setInterval(function () {
     secondsLeft--;
     timeEl.textContent = ("Time: " + secondsLeft);
 
-    if(secondsLeft === 0) {
-      clearInterval(timerInterval);
+    if (secondsLeft <=0) {
       endGame();
     }
 
   }, 1000);
 }
 
-// function askQuestions() {
-//   // console.log(myQuestions)
-//   for (var i = 0; i < myQuestions.length; i++) {
-//     renderQuestion(i);
-//   }
-// }
-
+//clears page and asks next question - using for loop
 function renderQuestion() {
-  if(nextQuestion >= myQuestions.length) {
+  if (nextQuestion >= myQuestions.length) {
     endGame();
-  }
+  } else {
   questionPrompt.innerHTML = "";
   optionsPrompt.innerHTML = "";
   questionPrompt.textContent = myQuestions[nextQuestion].title;
   currentAnswer = myQuestions[nextQuestion].answer;
-
   // console.log(myQuestions[i].title);
   for (var i = 0; i < myQuestions[nextQuestion].choices.length; i++) {
     var li = document.createElement("ul");
@@ -65,35 +59,85 @@ function renderQuestion() {
     optionsPrompt.appendChild(li);
   }
 }
-
+}
+//end of quiz, clears page, presents user with done, score, initials
 function endGame() {
-alert("You're done!");
+  // var initials = prompt("You're done! Score: " + secondsLeft + " Please provide your initials here.");
+  //clear page
+  clearInterval(timerInterval);
+  console.log("end game");
+  console.log(questionPrompt);
+  questionPrompt.innerHTML = "";
+  optionsPrompt.innerHTML = "";
+  answerPrompt.innerHTML = "";
+  //header - All Done
+  questionPrompt.textContent = "All Done!";
+  //shows user score
+  optionsPrompt.textContent = "Your final score is " + secondsLeft;
+  //enter initials and submit
+  answerPrompt.textContent = "Enter initials:";
+  inputBox = document.createElement("input");
+  answerPrompt.append(inputBox);
+  var finalSubmit = document.createElement("button");
+  finalSubmit.textContent = "Submit";
+  answerPrompt.append(finalSubmit);
 }
 
+//view high scores page
+function highScores () {
+  questionPrompt.innerHTML = "";
+  optionsPrompt.innerHTML = "";
+  answerPrompt.innerHTML = "";
+  //header - Highscores
+  questionPrompt.textContent = "Highscores";
+  //show user list of scores
+  answerPrompt.textContent = inputBox.value + " " + secondsLeft;
+  var goBack = document.createElement("button");
+  goBack.textContent = "Go Back";
+  answerPrompt.append(goBack);
+  var clearHighscores = document.createElement("button");
+  clearHighscores.textContent = "Clear Highscores";
+  goBack.append(clearHighscores);
+}
 
-//
-//
 //main
-//
-//
 
+//defining timer top right
 timeEl.textContent = ("Time: " + secondsLeft);
+//defining text on page load
 questionPrompt.textContent = ("Try to answer the following code-related questins within the time limit. Keep in mind that incorrect answers will penalize your score by 15 seconds!")
+//call quiz start
 quizBtn();
 
-optionsPrompt.addEventListener("click", function(event) {
+//add event listener for clicking on answers
+optionsPrompt.addEventListener("click", function (event) {
   var element = event.target;
-  if (element.matches("button")===true) {
+  if (element.matches("button") === true) {
     var answer = element.textContent;
-    console.log(answer);
-    if(currentAnswer===answer) {
+    // console.log(answer);
+    if (currentAnswer === answer) {
       // console.log("correct")
       answerPrompt.textContent = "correct!"
     } else {
       answerPrompt.textContent = "wrong!"
+      secondsLeft = secondsLeft - 15;
     }
     console.log(nextQuestion);
     nextQuestion++;
     renderQuestion();
   }
 })
+
+//add event listener for final submit button
+answerPrompt.addEventListener("click", function (event) {
+  var element = event.target;
+  if (element.matches("button") === true) {
+    var initials = inputBox.value;
+    localStorage.setItem(initials, secondsLeft);
+    console.log(localStorage.getItem(initials));
+    highScores();
+  }
+})
+
+//add event listener to View High Scores
+//viewHighScores = 

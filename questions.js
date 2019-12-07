@@ -1,5 +1,5 @@
 
-
+//quiz questions array 
 var myQuestions = [
     {
         title: "Commonly used data types DO NOT include:",
