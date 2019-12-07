@@ -1,0 +1,42 @@
+body {
+    background: pink;
+}
+
+h5 {
+    float: right;
+    padding-right: 2%;
+}
+
+h1 {
+    text-align: center;
+    color: blueviolet;
+}
+
+.questions {
+    text-align: left;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.options {
+    text-align: left;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.answers {
+    text-align: left;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.btn {
+    color: black;
+
+}
+
+.quiz-button {
+    margin-left: 45%;
+    margin-right: 45%;
+    margin-top: 2%;
+}
