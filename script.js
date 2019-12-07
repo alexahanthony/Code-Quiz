@@ -13,7 +13,7 @@ function quizBtn () {
   var aButton = document.createElement("button");
   aButton.textContent = "Start Quiz!";
   aButton.className = "quiz-button"
-  optionsPrompt.appendChild(aButton);
+  questionPrompt.appendChild(aButton);
   aButton.addEventListener("click", function(){startQuiz()});
 }
 
@@ -37,7 +37,7 @@ function setTime() {
       endGame();
     }
 
-  }, 100);
+  }, 1000);
 }
 
 // function askQuestions() {
@@ -48,7 +48,7 @@ function setTime() {
 // }
 
 function renderQuestion() {
-  if(nextQuestion > myQuestions.length) {
+  if(nextQuestion >= myQuestions.length) {
     endGame();
   }
   questionPrompt.innerHTML = "";
@@ -64,22 +64,6 @@ function renderQuestion() {
     li.appendChild(button);
     optionsPrompt.appendChild(li);
   }
-
-  optionsPrompt.addEventListener("click", function(event) {
-    var element = event.target;
-    if (element.matches("button")===true) {
-      var answer = element.textContent;
-      console.log(answer);
-      if(currentAnswer===answer) {
-        // console.log("correct")
-        answerPrompt.textContent = "correct!"
-      } else {
-        answerPrompt.textContent = "wrong!"
-      }
-      nextQuestion++;
-      renderQuestion();
-    }
-  })
 }
 
 function endGame() {
@@ -97,3 +81,19 @@ timeEl.textContent = ("Time: " + secondsLeft);
 questionPrompt.textContent = ("Try to answer the following code-related questins within the time limit. Keep in mind that incorrect answers will penalize your score by 15 seconds!")
 quizBtn();
 
+optionsPrompt.addEventListener("click", function(event) {
+  var element = event.target;
+  if (element.matches("button")===true) {
+    var answer = element.textContent;
+    console.log(answer);
+    if(currentAnswer===answer) {
+      // console.log("correct")
+      answerPrompt.textContent = "correct!"
+    } else {
+      answerPrompt.textContent = "wrong!"
+    }
+    console.log(nextQuestion);
+    nextQuestion++;
+    renderQuestion();
+  }
+})
