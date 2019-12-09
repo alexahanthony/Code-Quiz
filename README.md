@@ -1,6 +1,6 @@
 # Unit 04 Web APIs - Code Quiz
 
-![alt text](screenshot.png)
+![screenshot](screenshot.png)
 
 # Table of Contents (Optional)
 N/A
