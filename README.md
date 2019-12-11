@@ -1,6 +1,6 @@
 # Unit 04 Web APIs - Code Quiz
 
-![screenshot](screenshot.png)
+![Screenshot](./Assets/Screenshot.png)
 
 # Table of Contents (Optional)
 N/A
